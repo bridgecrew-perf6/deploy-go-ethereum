@@ -15,8 +15,6 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
-
-
 // Account is an instance of the etherium account
 type Account struct {
 	ctx     context.Context
@@ -114,4 +112,17 @@ func isZeroAddress(iaddress interface{}) bool {
 	zeroAddressBytes := common.FromHex("0x0000000000000000000000000000000000000000")
 	addressBytes := address.Bytes()
 	return reflect.DeepEqual(addressBytes, zeroAddressBytes)
+}
+
+// isValidAddress validate hex address
+func isValidAddress(iaddress interface{}) bool {
+	re := regexp.MustCompile("^0x[0-9a-fA-F]{40}$")
+	switch v := iaddress.(type) {
+	case string:
+		return re.MatchString(v)
+	case common.Address:
+		return re.MatchString(v.Hex())
+	default:
+		return false
+	}
 }
