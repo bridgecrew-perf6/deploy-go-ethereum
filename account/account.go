@@ -22,6 +22,7 @@ type Account struct {
 	address common.Address
 }
 
+// Balance is a current balance of the etherium account
 type Balance struct {
 	Wei  *big.Int
 	Gwei *big.Int
